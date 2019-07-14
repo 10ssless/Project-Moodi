@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="assets/images/teal.png" type="image/png" sizes="16x16">
+    <title>Document</title>
+    <style>
+        .main-content {
+            padding: 300px;
+        }
+        button{
+            font-size: 50px;
+            text-transform: uppercase;
+            border: none;
+            background: none;
+            margin: 30px;
+        }
+        button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-content">
+        <!-- <audio controls autoplay name="media">
+            <source src="https://freesound.org/data/previews/95/95548_8043-hq.mp3" type="audio/mpeg">
+            
+        </audio> -->
+
+        <!-- <button class="player fire" data-state="pause">fire</button> -->
+
+        <!-- <iframe src="https://freesound.org/data/previews/95/95548_8043-hq.mp3" allow="autoplay" style="display:none" id="iframeAudio">
+        </iframe> -->
+
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="assets/sound/soundmanager2.js"></script> -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            /*
+                loop thru an array of sound IDs
+                pass each ID to getSound() to create new audio player
+                ---need to create objs for each sound to store credits, volume, etc
+                create play/pause buttons for each sound
+                ---need data-state=play or pause attr
+            */
+
+            // empty global array to store sounds retrieved from API
+            var ids = ["95548","353501","22384","24511"]
+            var name_ref = {
+                0:"fire",
+                1:"wind",
+                2:"water",
+                3:"earth",
+            }
+            var sounds = []
+
+            function render(snd){
+                let btn = $("<button>")
+                let key = snd.tag
+                btn.addClass("player")
+                btn.attr("data-tag",key)
+                btn.attr("data-state","pause")
+                btn.text(key.substring(7))
+                $(".main-content").append(btn)
+                console.log("new button rendered")
+            }
+
+            function getSound(id,i) {
+                // API parameters   
+                var api_key = "zpYw9os3gddk5YShY8pJFMyYJbfQmcJQ5HbEqCer"
+                var queryURL = "https://freesound.org/apiv2/sounds/" + id + 
+                    "/?descriptors=lowlevel.mfcc,rhythm.bpm&token=" + api_key
+                $.ajax({
+                    type: "GET",
+                    url: queryURL,
+                    dataType: "JSON",
+                }).then(function (response) {
+                    let sound = {
+                        name: response.name,
+                        url: new Audio(response.previews["preview-hq-mp3"]),
+                        creator: response.username,
+                        tag: "player-"+i,
+                    }
+                    sounds.push(sound)
+                    render(sound)
+                })
+            }
+
+
+            // fill array of audio objects
+            // called at the bottom at the page
+
+            for(var i = 0; i<ids.length; i++){
+                getSound(ids[i],i);
+            }
+
+
+   
+            $(document.body).on("click",".player",function () {
+                let btn_tag = $(this).attr("data-tag")
+                console.log("clicked "+btn_tag)
+                let state = $(this).attr("data-state")
+                let mp3;
+                for(var i=0; i<sounds.length; i++){
+                    if(sounds[i].tag == btn_tag){
+                        mp3 = sounds[i].url
+                    }
+                }
+                console.log(mp3)
+                if (state == "pause") {
+                    mp3.play()
+                    $("button").attr("data-state", "play")
+                } else {
+                    mp3.pause()
+                    $("button").attr("data-state", "pause")
+                }
+                
+                
+            })
+            
+
+
+
+
+
+            // intialize
+            // fill();
+            // console.log("final count "+sounds.length)
+        })
+        </script>
+</body>
+
+</html>
