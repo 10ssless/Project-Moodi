@@ -6,7 +6,7 @@ body {
     background-size: cover;
     font-family: 'DM Serif Display', serif;
     transition-property: background; 
-    transition-duration: 3s;
+    transition-duration: 2.5s;
 }
 
 header {
