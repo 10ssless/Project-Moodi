@@ -247,7 +247,7 @@ $(document).ready(function () {
         }
 
         // play-pause code
-        if (state == "pause") {
+        if (state == "pause" && now_playing.length < 2) {
             mp3.play()
             $(this).attr("data-state", "play").css("color", "white")
             ref[btn_tag.substring(7)][2] = "play"
