@@ -31,29 +31,30 @@ $(document).ready(function () {
         x: ["error", 0, "pause"],
     }
 
+    // combos.fire.water
     // bank of img ids for all the different combinations of sounds
     var combos = {
         fire: {
             fire: "1061640",
             wind: "431722",
-            earth: "2323799",
+            earth: "51951",
             water: "2637996",
-            youth: "783928",
+            youth: "1251796",
             city: "2347011",
-            rain: "266436",
+            rain: "2308671",
         },
         wind: {
             wind: "2221515",
             fire: "431722",
             earth: "721993",
-            water: "1154510",
-            youth: "279453",
+            water: "1698618",
+            youth: "2162454",
             city: "1108402",
             rain: "2100253",
         },
         earth: {
             earth: "917494",
-            fire: "2323799",
+            fire: "51951",
             wind: "721993",
             water: "927414",
             youth: "699558",
@@ -63,7 +64,7 @@ $(document).ready(function () {
         water: {
             water: "1480807",
             fire: "2637996",
-            wind: "1154510",
+            wind: "1698618",
             earth: "927414",
             youth: "2516017",
             city: "270186",
@@ -71,8 +72,8 @@ $(document).ready(function () {
         },
         youth: {
             youth: "754769",
-            fire: "783928",
-            wind: "1223649",
+            fire: "1251796",
+            wind: "2162454",
             earth: "699558",
             water: "707185",
             city: "1309611",
@@ -89,7 +90,7 @@ $(document).ready(function () {
         },
         rain: {
             rain: "459451",
-            fire: "266436",
+            fire: "2308671",
             wind: "2100253",
             earth: "1463530",
             water: "2423959",
@@ -170,10 +171,11 @@ $(document).ready(function () {
     // get sound id or combo id to request img from API 
     function getBg(id) {
         // var apiKey = '563492ad6f91700001000001f9b725e5839c427983b9e3dab63fd890';
-        var apiKey = '563492ad6f91700001000001de035b34feb64a7d880dad502e38a23f';
+        // var apiKey = '563492ad6f91700001000001de035b34feb64a7d880dad502e38a23f';
+        var apiKey = "563492ad6f9170000100000166ec2901806241929301869b3f72545c";
         var xhr = new XMLHttpRequest();
         xhr.open('GET', "https://api.pexels.com/v1/photos/" + id, true);
-        xhr.setRequestHeader('Authorization', '563492ad6f91700001000001f9b725e5839c427983b9e3dab63fd890');
+        xhr.setRequestHeader('Authorization', apiKey);
         xhr.responseType = 'json';
         xhr.send();
         xhr.onreadystatechange = function () {
@@ -187,17 +189,17 @@ $(document).ready(function () {
         }
     }
 
-    function colorize() {
-        for (var i = 0; i < 7; i++) {
-            let tag = ".player-" + i
-            if (ref[i][2] == "play") {
-                $(tag).css("color", "white")
-            }
-            else {
-                $(tag).css("color", "black")
-            }
-        }
-    }
+    // function colorize() {
+    //     for (var i = 0; i < 7; i++) {
+    //         let tag = ".player-" + i
+    //         if (ref[i][2] == "play") {
+    //             $(tag).css("color", "white")
+    //         }
+    //         else {
+    //             $(tag).css("color", "black")
+    //         }
+    //     }
+    // }
 
     function findCombo(arr){
         if (arr.length > 2) {
@@ -210,10 +212,10 @@ $(document).ready(function () {
             np = arr
             return combos[np[0]][np[1]]
         }
-        else if (arr.length > 0){
-            np = [arr[0], arr[0]]
-            return combos[np[0]][np[1]]
-        }
+        // else if (arr.length > 0){
+        //     np = [arr[0], arr[0]]
+        //     return combos[np[0]][np[1]]
+        // }
         else {
             np = [arr[0], arr[0]]
             return combos[np[0]][np[1]]
@@ -237,7 +239,7 @@ $(document).ready(function () {
         let btn_tag = $(this).attr("data-tag")
         let btn_name = $(this).text()
         let state = $(this).attr("data-state")
-        let mp3, combo_id, np;
+        let mp3, combo_id;
         for (var i = 0; i < sounds.length; i++) {
             if (sounds[i].tag == btn_tag) {
                 mp3 = sounds[i].audio
@@ -250,6 +252,7 @@ $(document).ready(function () {
             $(this).attr("data-state", "play").css("color", "white")
             ref[btn_tag.substring(7)][2] = "play"
             now_playing.push(btn_name)              // add name of sound to now_playing array
+            console.log(now_playing)
             combo_id = findCombo(now_playing)
             getBg(combo_id)         // background image API call
             // colorize()           // assign black & white color only to now playing
@@ -264,8 +267,11 @@ $(document).ready(function () {
                     now_playing.splice(i, 1)
                 }
             }
+            console.log(now_playing)
+            // if(now_playing > 0){
             combo_id = findCombo(now_playing)
             getBg(combo_id)         // background image API call
+            // }
                 // colorize()           // assign black & white color only to now playing
             
         }
