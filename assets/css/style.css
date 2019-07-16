@@ -1,0 +1,122 @@
+body {
+    background: rgb(34, 209, 178);
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'DM Serif Display', serif;
+    transition-property: background; 
+    transition-duration: 3s;
+}
+
+header {
+    text-align: center;
+    padding-top: 10px;
+    position: relative;
+}
+
+#header-icon {
+    border: 1px solid white;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    box-shadow: 0px 0px 6px ghostwhite;
+    position: relative;
+    top: -3px;
+}
+
+.moodi {
+    text-decoration: underline;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+#title {
+    font-size: 20px;
+    kerning: 3px;
+}
+
+.main-content,
+.welcome,
+.create {
+    padding: 300px;
+    padding-left: 2%;
+    padding-right: 2%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.welcome,
+.create {
+    color: rgb(51, 114, 102);
+}
+
+button {
+    font-family: 'DM Serif Display', serif;
+    font-size: 50px;
+    text-transform: uppercase;
+    border: none;
+    background: none;
+    margin: 30px;
+}
+
+button:hover {
+    color: rgba(255, 255, 255);
+}
+
+button:focus {
+    outline: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    color: rgb(51, 114, 102);
+}
+
+#credits {
+    transition-property: color;
+    transition-duration: 1s;
+}
+
+#credits:hover {
+    color: rgb(0, 0, 0);
+}
+
+.details {
+    /* display: inline; */
+    position: absolute;
+    left: 70px;
+    bottom: 0px;
+    width: 1010px;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    padding-left: 10%;
+    padding-right: 10%;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.627);
+    transition-property: color;
+    transition-duration: 1s;
+}
+
+a#title {
+    text-decoration: none;
+    color: rgba(0, 0, 0);
+}
+
+.detail-name {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+a:hover {
+    color: rgba(255, 255, 255);
+    text-decoration: none;
+}
