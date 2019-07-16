@@ -50,7 +50,8 @@ $(document).ready(function () {
             water: "1698618",
             youth: "2162454",
             city: "1108402",
-            rain: "2100253",
+            rain: "2144326",
+            // rain: "2100253",
         },
         earth: {
             earth: "917494",
@@ -91,7 +92,8 @@ $(document).ready(function () {
         rain: {
             rain: "459451",
             fire: "2308671",
-            wind: "2100253",
+            wind: "2144326",
+            // wind: "2100253",
             earth: "1463530",
             water: "2423959",
             youth: "1564828",
