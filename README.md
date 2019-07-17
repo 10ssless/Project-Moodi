@@ -1,11 +1,16 @@
 # Project-Moodi
 
 Moodi is a minimalist image and sound-based relaxation application.
-Users click on names of different sonic environments
-Using variouus timing and transparency elements from both java and css user experience is enhanced and streamlined.
-The css contains various color properties in the blue-green family to relax the psyche and soothe.
-The html contains simplisitic button elements and minimal typograpy to focus the user on the immersive experience of sight and sound.
-The javascript is the real powerhouse behind the app, with various sections being generated and appended to html, query images from the image API and button functions to retriveve and play various sounds on click.
+Click on any name to go to a different sonic environment. Click a second sound to evoke an entirely new space.
+Explore the possibilities and find easter eggs as you listen and relax.
+
+Users are introduced to the app by slow flashing messages that fade in and out to recalibrate the user.
+CSS stylesheets use various color properties in the blue-green family to relax the psyche and soothe the eyes.
+New backgrounds fade as you slowly transport to your new environment.
+HTML/CSS contain simple button elements and minimalist typograpy to better immerse the user in the audio and visual.
+JavaScript retrieves sounds from Freesound API on load, stores the sound object, renders the buttons, updates the credits list.
+2 main on("click") functions toggling the play/pause of each sound and updating background, and toggling the credits display.
+
 Below are key elements to the functionality of the application.
 
 ## HTML Elements
@@ -70,7 +75,7 @@ button:hover {
 
 ## Javascript & JQuery Elements
 
-This  function contains the AJAX call used to gather the necessary sounds from the Freesound API, stores them in a global array, renders the play/pause buttons to html, and adds an entry to the credits list. All actions manipulating the DOM needed to be called within the AJAX .then() function to prevent async errors. 
+This  function contains the AJAX call used to gather the necessary sounds from the Freesound API, store them in a global array, render the play/pause buttons to html, and add an entry to the credits list. All actions manipulating the DOM needed to be called within the AJAX .then() function to prevent async errors later on. 
 ```js
     function getSound(id, i) {
          
