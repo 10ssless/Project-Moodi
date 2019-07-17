@@ -5,8 +5,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'DM Serif Display', serif;
-    transition-property: background; 
-    transition-duration: 2.5s;
+    transition-property: background,background-image,background-color; 
+    transition-duration: 2.7s;
 }
 
 header {
@@ -88,7 +88,7 @@ footer {
     position: absolute;
     left: 70px;
     bottom: 0px;
-    width: 1010px;
+    width: 1070px;
     color: rgb(255, 255, 255);
     background: rgba(0, 0, 0, 0.5);
     border-radius: 3px;
@@ -120,7 +120,7 @@ a:hover {
 }
 
 button:hover {
-    color: rgba(255, 255, 255);
+    color: rgba(255, 255, 255);  
 }
 
 @media only screen and (max-width: 1440px) and (min-width: 1024px) {
@@ -136,5 +136,9 @@ button:hover {
         background: none;
         margin: 20px;
         font-size: 40px;
+    }
+
+    button:hover {
+        color: rgba(255, 255, 255);
     }
 }

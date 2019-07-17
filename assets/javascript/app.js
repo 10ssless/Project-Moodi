@@ -21,18 +21,18 @@ $(document).ready(function () {
 
     //  bank of names, volume levels, play states to help initialize page
     var ref = {
-        0: ["fire", 0.5, "pause"],
+        0: ["fire", 0.35, "pause"],
         1: ["wind", 0.2, "pause"],
         2: ["earth", 1, "pause"],
-        3: ["water", 0.3, "pause"],
+        3: ["water", 0.35, "pause"],
         4: ["youth", 0.75, "pause"],
         5: ["city", 0.5, "pause"],
         6: ["rain", 0.2, "pause"],
         x: ["error", 0, "pause"],
     }
 
-    // combos.fire.water
     // bank of img ids for all the different combinations of sounds
+    // ex. combos.fire.water
     var combos = {
         fire: {
             fire: "1061640",
@@ -51,7 +51,6 @@ $(document).ready(function () {
             youth: "2162454",
             city: "1108402",
             rain: "2144326",
-            // rain: "2100253",
         },
         earth: {
             earth: "917494",
@@ -78,7 +77,7 @@ $(document).ready(function () {
             earth: "699558",
             water: "707185",
             city: "1309611",
-            rain: "1564828",
+            rain: "804474",
         },
         city: {
             city: "378570",
@@ -93,16 +92,15 @@ $(document).ready(function () {
             rain: "459451",
             fire: "2308671",
             wind: "2144326",
-            // wind: "2100253",
             earth: "1463530",
             water: "2423959",
-            youth: "1564828",
+            youth: "804474",
             city: "950223",
         }
     }
     
     // now_playing array to track history of selected sounds
-    // empty array to store sound objects in
+    // empty array to store sound objects
     var now_playing = []    
     var sounds = []         
 
@@ -111,13 +109,12 @@ $(document).ready(function () {
         let btn = $("<button>")
         let key = snd.tag
         let name = ref[key.substring(7)][0]
-        // let img = img_search[key.substring(7)]
         let vol = ref[key.substring(7)][1]
         snd.audio.volume = vol
-        // console.log(name+" "+vol)
+        snd.audio.loop = true
+        console.log(snd.audio)
         btn.addClass("player")
         btn.attr("data-tag", key)
-        // btn.attr("data-name",img)
         btn.attr("data-state", "pause")
         btn.text(name)
         $(".main-content").append(btn)
@@ -133,20 +130,18 @@ $(document).ready(function () {
         $(".details").append(nameLink)
     }
 
-    // main AJAX call to retrieve sounds from freesound.org
+    // AJAX call to retrieve sounds from Freesound API
     // creates new sound object with relevant info
     // stores in sounds array, calls functions to render buttons and load credits
     // includes catch for when API returns an error
     function getSound(id, i) {
-        // API parameters   
         var api_key = ["zpYw9os3gddk5YShY8pJFMyYJbfQmcJQ5HbEqCer", "gHsTMrTQ9mdPAwY5kawYD9ilwE8awIeNHhKKy0Aa"]
-        var queryURL = "https://freesound.org/apiv2/sounds/" + id + "/?descriptors=lowlevel.mfcc,rhythm.bpm&token=" + api_key[1]
+        var queryURL = "https://freesound.org/apiv2/sounds/" + id + "/?descriptors=lowlevel.mfcc,rhythm.bpm&token=" + api_key[0]
         $.ajax({
             type: "GET",
             url: queryURL,
             dataType: "JSON",
         }).then(function (response) {
-            // console.log(response)
             let sound = {
                 name: response.name,
                 audio: new Audio(response.previews["preview-hq-mp3"]),
@@ -169,7 +164,7 @@ $(document).ready(function () {
         })
     }
 
-    // The pexel api ajax call
+    // AJAX call to retrieve images from the Pexels API
     // get sound id or combo id to request img from API 
     function getBg(id) {
         // var apiKey = '563492ad6f91700001000001f9b725e5839c427983b9e3dab63fd890';
@@ -185,39 +180,23 @@ $(document).ready(function () {
                 var resp = xhr.response;
                 console.log(resp);
                 let img_url = JSON.stringify(resp.src.landscape);
-                // $("body").css("background-image", "url(" + img_url + ")").;
                 $("body").css("background-image", "url(" + img_url + ")")
             }
         }
     }
 
-    // function colorize() {
-    //     for (var i = 0; i < 7; i++) {
-    //         let tag = ".player-" + i
-    //         if (ref[i][2] == "play") {
-    //             $(tag).css("color", "white")
-    //         }
-    //         else {
-    //             $(tag).css("color", "black")
-    //         }
-    //     }
-    // }
-
+    // helper function to find 
     function findCombo(arr){
-        if (arr.length > 2) {
-            let one = arr[arr.length - 2]
-            let two = arr[arr.length - 1]
-            np = [one, two]
-            return combos[np[0]][np[1]]
-        }
-        else if (arr.length > 1) {
+        // if (arr.length > 2) {
+        //     let one = arr[arr.length - 2]
+        //     let two = arr[arr.length - 1]
+        //     np = [one, two]
+        //     return combos[np[0]][np[1]]
+        // }
+        if (arr.length > 1) {
             np = arr
             return combos[np[0]][np[1]]
         }
-        // else if (arr.length > 0){
-        //     np = [arr[0], arr[0]]
-        //     return combos[np[0]][np[1]]
-        // }
         else {
             np = [arr[0], arr[0]]
             return combos[np[0]][np[1]]
@@ -227,7 +206,7 @@ $(document).ready(function () {
 
 
     // fill sounds array with new sound objects
-    // where ajax function is called
+    // where AJAX function is called
     for (var i = 0; i < ids.length; i++) {
         getSound(ids[i], i);
     }
@@ -236,9 +215,7 @@ $(document).ready(function () {
     // click button to play/pause 
     // reference sounds array to find which sound was selected
     $(document.body).on("click", ".player", function () {
-
-        // get info stored in button
-        let btn_tag = $(this).attr("data-tag")
+        let btn_tag = $(this).attr("data-tag")      // get info stored in button
         let btn_name = $(this).text()
         let state = $(this).attr("data-state")
         let mp3, combo_id;
@@ -247,40 +224,33 @@ $(document).ready(function () {
                 mp3 = sounds[i].audio
             }
         }
-
         // play-pause code
+        // limit max # of sounds playing to 2
         if (state == "pause" && now_playing.length < 2) {
             mp3.play()
             $(this).attr("data-state", "play").css("color", "white")
             ref[btn_tag.substring(7)][2] = "play"
             now_playing.push(btn_name)              // add name of sound to now_playing array
-            console.log(now_playing)
-            combo_id = findCombo(now_playing)
-            getBg(combo_id)         // background image API call
-            // colorize()           // assign black & white color only to now playing
+            combo_id = findCombo(now_playing)       // call helper function to get a unique photo ID
+            getBg(combo_id)                         // background image API call
         }
         else {
             mp3.pause()
             $(this).attr("data-state", "pause").css("color", "black")
             ref[btn_tag.substring(7)][2] = "pause"
             let name = ref[btn_tag.substring(7)][0]
-            for (var i = now_playing.length - 1; i >= 0; i--) {     // remove name from now_playing
+            for (var i = now_playing.length-1; i >= 0; i--) {     // remove name from now_playing
                 if (now_playing[i] == name) {
                     now_playing.splice(i, 1)
                 }
             }
-            console.log(now_playing)
-            // if(now_playing > 0){
             combo_id = findCombo(now_playing)
-            getBg(combo_id)         // background image API call
-            // }
-                // colorize()           // assign black & white color only to now playing
-            
+            getBg(combo_id)         
         }
     })
 
 
-    // click to display credit info with links to original url
+    // click to display credit info with links to original urls
     $("#credits").click(function () {
         let state = $(".details").attr("data-state")
         if (state == "hidden") {
@@ -296,7 +266,7 @@ $(document).ready(function () {
     })
 
 
-    // fading elements
+    // fading intro elements
     var iconFade = setTimeout(function () {
         $("#header-icon").fadeIn(1000)
     }, 300)
