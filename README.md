@@ -29,7 +29,7 @@ This HTML snippet holds key links to external stylesheets and libraries
     <title>moodi.</title>
 ```
 
-## Css Elements
+## CSS Elements
  This code snippet sets the background that is intially displayed.
 
 ```css
@@ -73,7 +73,7 @@ button:hover {
 }
 ```
 
-## Javascript & JQuery Elements
+## JavaScript & jQuery Elements
 
 This  function contains the AJAX call used to gather the necessary sounds from the Freesound API, store them in a global array, render the play/pause buttons to html, and add an entry to the credits list. All actions manipulating the DOM needed to be called within the AJAX .then() function to prevent async errors later on. 
 ```js
