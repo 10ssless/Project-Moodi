@@ -168,8 +168,8 @@ $(document).ready(function () {
     // get sound id or combo id to request img from API 
     function getBg(id) {
         // var apiKey = '563492ad6f91700001000001f9b725e5839c427983b9e3dab63fd890';
-        // var apiKey = '563492ad6f91700001000001de035b34feb64a7d880dad502e38a23f';
-        var apiKey = "563492ad6f9170000100000166ec2901806241929301869b3f72545c";
+        var apiKey = '563492ad6f91700001000001de035b34feb64a7d880dad502e38a23f';
+        // var apiKey = "563492ad6f9170000100000166ec2901806241929301869b3f72545c";
         var xhr = new XMLHttpRequest();
         xhr.open('GET', "https://api.pexels.com/v1/photos/" + id, true);
         xhr.setRequestHeader('Authorization', apiKey);
